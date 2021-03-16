@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/camera_nav"
+    app:startDestination="@id/photos_list">
+
+    <fragment
+        android:id="@+id/photos_list"
+        android:name="com.example.camera.fragments.GalleryFragment"
+        android:label="@string/gallery"
+        tools:layout="@layout/fragment_gallery" >
+        <action
+            android:id="@+id/action_photos_list_to_camera"
+            app:destination="@id/camera" />
+        <action
+            android:id="@+id/action_photos_list_to_photoDetailFragment"
+            app:destination="@id/photoDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/camera"
+        android:name="com.example.camera.fragments.CameraFragment"
+        android:label="@string/camera"
+        tools:layout="@layout/fragment_camera" >
+        <action
+            android:id="@+id/action_camera_to_photoFragment"
+            app:destination="@id/photoFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.example.camera.fragments.PhotoFragment"
+        android:label="@string/photo"
+        tools:layout="@layout/fragment_photo" >
+        <action
+            android:id="@+id/action_photoFragment_to_camera"
+            app:destination="@id/camera"
+            app:popUpTo="@id/camera"/>
+        <action
+            android:id="@+id/action_photoFragment_to_photos_list"
+            app:destination="@id/photos_list"
+            app:popUpTo="@id/photos_list"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/photoDetailFragment"
+        android:name="com.example.camera.PhotoDetailFragment"
+        android:label="@string/modify_pic"
+        tools:layout="@layout/fragment_photo_detail" >
+        <action
+            android:id="@+id/action_photoDetailFragment_to_photos_list"
+            app:destination="@id/photos_list"
+            app:popUpTo="@id/photos_list"
+            app:popUpToInclusive="true"/>
+    </fragment>
+</navigation>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">camera</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gallery">Galleria</string>
+    <string name="camera">Fotocamera</string>
+    <string name="photo">Foto</string>
+    <string name="modify_pic">Modifica foto</string>
+    <string name="save">Salva</string>
+    <string name="delete">Elimina</string>
+    <string name="empty_gallery">Galleria vuota</string>
+</resources>
