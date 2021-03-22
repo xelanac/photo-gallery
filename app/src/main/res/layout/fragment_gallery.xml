@@ -18,6 +18,7 @@
             android:layout_marginStart="@dimen/maring_start_end_recycler_view"
             android:textColor="@color/black"
             android:textSize="@dimen/txt_size_gallery"
+            android:text="@string/empty_gallery"
             android:layout_centerHorizontal="true"/>
 
         <androidx.recyclerview.widget.RecyclerView

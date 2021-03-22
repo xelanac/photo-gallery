@@ -7,16 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.camera.R
 import com.example.camera.utils.CommonUtils
+import com.example.camera.utils.CommonUtils.BASE_URI
 import com.example.camera.utils.CommonUtils.PIC_URI
 import kotlinx.android.synthetic.main.fragment_photo.*
 import java.io.File
 
 class PhotoFragment : Fragment(), View.OnClickListener {
+
     private var uri : String = ""
     private lateinit var uriObject : Uri
     private var imageFile = ""
@@ -42,7 +43,10 @@ class PhotoFragment : Fragment(), View.OnClickListener {
 
         deleteButton.setOnClickListener(this)
         saveButton.setOnClickListener(this)
-        Glide.with(this).load(uriObject).into(photo_view)
+
+        Glide.with(this)
+            .load(uriObject)
+            .into(photo_view)
 
     }
 
@@ -66,8 +70,7 @@ class PhotoFragment : Fragment(), View.OnClickListener {
     }
 
     private fun deletePic(){
-
-        val uriForDeleteFunction = "${CommonUtils.baseUri}${imageFile}"
+        val uriForDeleteFunction = "$BASE_URI$imageFile"
         File(uriForDeleteFunction).delete()
         Toast.makeText(context, "Foto eliminata con successo", Toast.LENGTH_SHORT).show()
     }

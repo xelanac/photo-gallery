@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_text"
+        android:icon="@drawable/ic_text"
+        android:title="@string/action_text" />
+
+    <item
+        android:id="@+id/action_line"
+        android:icon="@drawable/ic_line"
+        android:title="@string/action_line" />
+
+    <item
+        android:id="@+id/action_arrow"
+        android:icon="@drawable/ic_arrow_sticker"
+        android:title="@string/action_unidirectional_arrow" />
+
+    <item
+        android:id="@+id/action_bidirectional_arrow"
+        android:icon="@drawable/ic_bidirectional_arrow"
+        android:title="@string/action_bidirectional_arrow"  />
+
+</menu>

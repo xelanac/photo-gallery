@@ -12,4 +12,16 @@
     <dimen name="photo_preview_dimen">80dp</dimen>
     <dimen name="maring_start_end_recycler_view">5dp</dimen>
     <dimen name="txt_size_gallery">20dp</dimen>
+
+    <!--btns properties-->
+    <dimen name="btn_radius">10dp</dimen>
+    <dimen name="stroke_width">2dp</dimen>
+    <dimen name="btn_color_radius">25dp</dimen>
+    <dimen name="color_btn_size">30dp</dimen>
+
+    <dimen name="standard_55">55dp</dimen>
+    <dimen name="standard_105">105dp</dimen>
+    <dimen name="standard_155">155dp</dimen>
+
+
 </resources>

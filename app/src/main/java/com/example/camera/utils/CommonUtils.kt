@@ -5,11 +5,13 @@ import java.io.File
 
 object CommonUtils {
     const val PIC_URI = "PIC_URI"
-    const val baseUri = "storage/emulated/0/Android/media/com.example.camera/camera/"
+    const val BASE_URI = "storage/emulated/0/Android/media/com.example.camera/camera/"
+    const val COMPLETE_URI = "file:///storage/emulated/0/Android/media/com.example.camera/camera/"
 
     fun getPics(path: String): List<File>? = File(path).listFiles()?.takeWhile {
-            it.isFile
-        }
+        it.isFile
+    }
+
 }
 
 

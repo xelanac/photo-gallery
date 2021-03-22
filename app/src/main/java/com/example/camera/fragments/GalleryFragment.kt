@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
@@ -12,6 +14,7 @@ import com.example.camera.R
 import com.example.camera.adapters.GalleryAdapter
 import com.example.camera.interfaces.ClickEventView
 import com.example.camera.utils.CommonUtils
+import com.example.camera.utils.CommonUtils.BASE_URI
 import com.example.camera.utils.CommonUtils.PIC_URI
 import kotlinx.android.synthetic.main.fragment_gallery.*
 import java.io.File
@@ -33,16 +36,17 @@ class GalleryFragment : Fragment(), View.OnClickListener, ClickEventView {
         floating_action_button.setOnClickListener(this)
         recyclerview_gallery.setHasFixedSize(true)
 
-        if (File(CommonUtils.baseUri).listFiles() == null) {
-            info_empty_txt.text = resources.getString(R.string.empty_gallery)
+        if (File(BASE_URI).listFiles().isNullOrEmpty()) {
+            info_empty_txt.visibility = VISIBLE
         } else {
-            info_empty_txt.text = ""
-            photoList = CommonUtils.getPics(CommonUtils.baseUri)!!
+            info_empty_txt.visibility = GONE
+            photoList = CommonUtils.getPics(BASE_URI)!!
 
             val galleryAdapter = GalleryAdapter(photoList, requireContext(), this)
             recyclerview_gallery.adapter = galleryAdapter
             recyclerview_gallery.layoutManager = LinearLayoutManager(context)
         }
+
     }
 
     override fun onClick(v: View?) {

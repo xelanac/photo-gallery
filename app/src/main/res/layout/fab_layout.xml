@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_anchor="@id/fab"
+    android:layout_gravity="top|center"
+    app:layout_anchorGravity="center|top"
+    tools:showIn="@layout/fragment_photo_detail">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:backgroundTint="@color/black"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@+id/fab_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:backgroundTint="@color/photo_brush_blue"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@+id/fab_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:backgroundTint="@color/photo_brush_purple"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@+id/fab_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:backgroundTint="@color/photo_brush_red"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@+id/fab_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:backgroundTint="@color/photo_brush_yellow"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="10dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@+id/fab_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:backgroundTint="@color/photo_brush_green"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

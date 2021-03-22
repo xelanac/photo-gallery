@@ -9,4 +9,13 @@
     <string name="save">Salva</string>
     <string name="delete">Elimina</string>
     <string name="empty_gallery">Galleria vuota</string>
+    <string name="title_edit_text_dialog">Inserisci un testo</string>
+
+    <string name="action_save">Salva</string>
+
+    <string name="action_text">Testo</string>
+    <string name="action_line">Linea</string>
+    <string name="action_unidirectional_arrow">Freccia</string>
+    <string name="action_bidirectional_arrow">Bidirezionale</string>
+
 </resources>

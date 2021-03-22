@@ -1,0 +1,19 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/btn_bidirectional_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        app:strokeColor="@color/white"
+        app:strokeWidth="@dimen/stroke_width"
+        app:cornerRadius="@dimen/btn_radius"
+        app:icon="@drawable/ic_bidirectional_arrow"
+        app:iconGravity="textTop"
+        app:iconTint="@color/white"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:elevation="2dp"/>
+</RelativeLayout>

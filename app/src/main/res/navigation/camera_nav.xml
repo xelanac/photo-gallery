@@ -27,6 +27,7 @@
             android:id="@+id/action_camera_to_photoFragment"
             app:destination="@id/photoFragment"/>
     </fragment>
+
     <fragment
         android:id="@+id/photoFragment"
         android:name="com.example.camera.fragments.PhotoFragment"
@@ -42,15 +43,11 @@
             app:popUpTo="@id/photos_list"
             app:popUpToInclusive="true"/>
     </fragment>
+
     <fragment
         android:id="@+id/photoDetailFragment"
-        android:name="com.example.camera.PhotoDetailFragment"
+        android:name="com.example.camera.fragments.PhotoDetailFragment"
         android:label="@string/modify_pic"
-        tools:layout="@layout/fragment_photo_detail" >
-        <action
-            android:id="@+id/action_photoDetailFragment_to_photos_list"
-            app:destination="@id/photos_list"
-            app:popUpTo="@id/photos_list"
-            app:popUpToInclusive="true"/>
-    </fragment>
+        tools:layout="@layout/fragment_photo_detail" />
+
 </navigation>

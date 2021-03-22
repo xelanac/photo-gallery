@@ -69,7 +69,6 @@ class CameraFragment : Fragment(), View.OnClickListener {
             requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }
 
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -84,13 +83,6 @@ class CameraFragment : Fragment(), View.OnClickListener {
                 Toast.makeText(context, "Permission request denied", Toast.LENGTH_LONG).show()
             }
         }
-    }
-
-    companion object {
-        private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-        private const val TAG = "CameraXBasic"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
     }
 
     private fun getOutputDirectory() :File {
@@ -166,6 +158,7 @@ class CameraFragment : Fragment(), View.OnClickListener {
 
                     savedUri = Uri.fromFile(photoFile)
 
+                    Log.e("uri", savedUri.toString())
                     findNavController().navigate(
                         R.id.action_camera_to_photoFragment,
                         bundleOf(PIC_URI to savedUri.toString())
@@ -178,4 +171,12 @@ class CameraFragment : Fragment(), View.OnClickListener {
         super.onDestroyView()
         cameraExecutor.shutdown()
     }
+
+    companion object {
+        private const val REQUEST_CODE_PERMISSIONS = 10
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private const val TAG = "CameraXBasic"
+        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+    }
+
 }

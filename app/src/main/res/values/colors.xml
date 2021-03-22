@@ -10,4 +10,18 @@
     <color name="red">#d6230f</color>
     <color name="green">#0fd644</color>
     <color name="background_item_pic">#edebdf</color>
+    <color name="yellow">#fff700</color>
+    <color name="blue">#0328fc</color>
+
+    <!-- edit photo colors -->
+    <color name="photo_brush_black">#000</color>
+    <color name="photo_brush_blue">#3F51B5</color>
+    <color name="photo_brush_green">#9CCC65</color>
+    <color name="photo_brush_purple">#BA68C8</color>
+    <color name="photo_brush_red">#F44336</color>
+    <color name="photo_brush_yellow">#FFEB3B</color>
+    <color name="photo_deep_purple">#673AB7</color>
+
+    <color name="dark">#2A3237</color>
+
 </resources>
