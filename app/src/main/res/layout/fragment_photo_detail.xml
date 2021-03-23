@@ -9,7 +9,19 @@
         android:id="@+id/photoEditorView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?attr/actionBarSize"/>
+        android:layout_marginBottom="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/img_compass"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/dimen_compass"
+            android:layout_height="@dimen/dimen_compass"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/compass_icon"/>
+
+    </ja.burhanrashid52.photoeditor.PhotoEditorView>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
