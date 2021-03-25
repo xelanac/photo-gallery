@@ -2,17 +2,17 @@ package com.example.camera.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context.SENSOR_SERVICE
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.hardware.*
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.animation.RotateAnimation
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -24,21 +24,22 @@ import com.example.camera.dialogs.EditTextDialogFragment
 import com.example.camera.interfaces.EditTextDialog
 import com.example.camera.utils.CommonUtils.BASE_URI
 import com.example.camera.utils.CommonUtils.PIC_URI
-import com.example.camera.utils.Compass
-import com.example.camera.utils.SOTWFormatter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ja.burhanrashid52.photoeditor.PhotoEditor
 import kotlinx.android.synthetic.main.fab_layout.*
 import kotlinx.android.synthetic.main.fragment_photo_detail.*
+import kotlin.math.roundToInt
+
 
 class PhotoDetailFragment : Fragment(), View.OnClickListener, EditTextDialog,
     BottomNavigationView.OnNavigationItemSelectedListener, PhotoEditor.OnSaveListener,
-    Compass.CompassListener {
+    SensorEventListener {
 
     private val fromBottom: Animation by lazy { AnimationUtils.loadAnimation(
         requireContext(),
         R.anim.from_bottom_anim
     ) }
+
     private val toBottom: Animation by lazy { AnimationUtils.loadAnimation(
         requireContext(),
         R.anim.to_bottom_anim
@@ -53,16 +54,22 @@ class PhotoDetailFragment : Fragment(), View.OnClickListener, EditTextDialog,
     private var unidirectionalArrow = R.drawable.unidirectional_arrow
     private var bidirectionalArrow = R.drawable.bidirectional_arrow
     private var line = R.drawable.line
-    private var compass: Compass? = null
-    private var sotwFormatter: SOTWFormatter? = null
-    private var currentAzimuth = 0f
     private var imgTitle = ""
+    
+    private var sensorManager: SensorManager? = null
+    private lateinit var accelerometer : Sensor
+    private lateinit var magnetometer : Sensor
+    private var lastAccelerometer = FloatArray(3)
+    private var lastMagnetometer = FloatArray(3)
+    private var rotationMatrix = FloatArray(9)
+    private var orientation = FloatArray(3)
+    private var isLastAccelerometerArrayCopied = false
+    private var isLastMagnetometerArrayCopied = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         colorText = requireContext().getColor(R.color.black)
-        sotwFormatter = SOTWFormatter(requireContext())
 
         arguments?.getString(PIC_URI)?.apply {
             pictureUri = Uri.parse("$BASE_URI$this")
@@ -70,8 +77,7 @@ class PhotoDetailFragment : Fragment(), View.OnClickListener, EditTextDialog,
 
         imgTitle = arguments?.getString(PIC_URI)!!
 
-        compass = Compass(requireContext())
-        compass?.setListener(this)
+        initCompassServices()
     }
 
     override fun onCreateView(
@@ -102,17 +108,12 @@ class PhotoDetailFragment : Fragment(), View.OnClickListener, EditTextDialog,
         fab_4.setOnClickListener(this)
         fab_5.setOnClickListener(this)
         fab_6.setOnClickListener(this)
-
     }
 
-    override fun onStart() {
-        super.onStart()
-        compass?.start()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        compass?.stop()
+    private fun initCompassServices() {
+        sensorManager = requireActivity().getSystemService(SENSOR_SERVICE) as SensorManager
+        accelerometer = sensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        magnetometer = sensorManager!!.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -168,7 +169,7 @@ class PhotoDetailFragment : Fragment(), View.OnClickListener, EditTextDialog,
     override fun onSuccess(imagePath: String) {
         saveImage(pictureUri.toString())
         findNavController().popBackStack()
-        Toast.makeText(requireContext(), "Foto salvata con successo", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), R.string.photo_successfully_saved, Toast.LENGTH_SHORT).show()
     }
 
     override fun onFailure(exception: Exception) {
@@ -215,7 +216,7 @@ class PhotoDetailFragment : Fragment(), View.OnClickListener, EditTextDialog,
         if(text.isEmpty()){
                 Toast.makeText(
                 requireContext(),
-                "Testo vuoto! Impossibile inserire la nota.",
+                R.string.empty_text,
                 Toast.LENGTH_SHORT)
                 .show()
         } else {
@@ -323,30 +324,75 @@ class PhotoDetailFragment : Fragment(), View.OnClickListener, EditTextDialog,
         this.fab.backgroundTintList = ColorStateList.valueOf(resources.getColor(color))
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        sensorManager?.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager?.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_NORMAL)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        sensorManager?.unregisterListener(this)
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (event?.sensor == accelerometer) {
+            System.arraycopy(event.values, 0, lastAccelerometer, 0, event.values.size )
+            isLastAccelerometerArrayCopied = true
+        } else if (event?.sensor == magnetometer) {
+            System.arraycopy(event.values, 0, lastMagnetometer, 0, event.values.size)
+            isLastMagnetometerArrayCopied = true
+        }
+
+        if(isLastAccelerometerArrayCopied && isLastMagnetometerArrayCopied) {
+            SensorManager.getRotationMatrix(
+                rotationMatrix,
+                null,
+                lastAccelerometer,
+                lastMagnetometer
+            )
+            SensorManager.getOrientation(rotationMatrix, orientation)
+
+            val degrees = (Math.toDegrees(orientation[0].toDouble()) + 360.0) % 360.0
+            val angle = ((degrees * 100).roundToInt() / 100).toFloat()
+
+            img_compass.rotation = -angle
+
+            val direction = getDirection(angle.toDouble())
+
+            val textDirection = "$angle° $direction"
+            txt_direction.text = textDirection
+        }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+
     companion object {
         const val REQUEST_WRITE_PERMISSION = 1001
     }
 
+    private fun getDirection(angle: Double): String {
+        var direction = ""
 
-    override fun onNewAzimuth(azimuth: Float) {
-        adjustArrow(azimuth)
-    }
+        if (angle >= 350 || angle <= 10)
+            direction = "N"
+        if (angle < 350 && angle > 280)
+            direction = "NW"
+        if (angle <= 280 && angle > 260)
+            direction = "W"
+        if (angle <= 260 && angle > 190)
+            direction = "SW"
+        if (angle <= 190 && angle > 170)
+            direction = "S"
+        if (angle <= 170 && angle > 100)
+            direction = "SE"
+        if (angle <= 100 && angle > 80)
+            direction = "E"
+        if (angle <= 80 && angle > 10)
+            direction = "NE"
 
-    private fun adjustArrow(azimuth: Float) {
-        Log.d(
-            "adjustArrow",
-            "will set rotation from " + currentAzimuth + " to "
-                    + azimuth
-        )
-        val an: Animation = RotateAnimation(
-            -currentAzimuth, -azimuth,
-            Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-            0.5f
-        )
-        currentAzimuth = azimuth
-        an.duration = 500
-        an.repeatCount = 0
-        an.fillAfter = true
-        img_compass.startAnimation(an)
+        return direction
     }
 }

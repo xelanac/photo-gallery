@@ -1,9 +1,9 @@
 package com.example.camera
 
+import android.hardware.SensorManager
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.camera.utils.CommonUtils
+import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity(){
 
