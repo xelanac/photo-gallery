@@ -1,4 +1,4 @@
-# Photo Gallery with photo editing
+# Photo Gallery with editing
 A native android photo gallery implemented in *Kotlin*. With this app you can:
 * Take a picture;
 * Delete it or save it in the gallery;
